@@ -1,0 +1,237 @@
+<html>
+<head>
+	<title>Tic Tac Toe Game</title>
+	<link href="style.css" rel="stylesheet"/>
+	<script src="jquery-3.3.1.js"></script>
+	<canvas id="myCanvas" width="500" height="500"></canvas>
+	<script>
+		var grid = [
+			[0, 0, 0],
+			[0, 0, 0],
+			[0, 0, 0]
+		];
+		var gridPos = [
+			[[0,0],[167,0],[333,0]],
+			[[0,167],[167,167],[333,167]],
+			[[0,333],[167,333],[333,333]]
+		];
+		
+		var ai = false;
+		var player1 = true;
+		var tie = false;
+		var tempTie = false;
+		
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		
+		ctx.beginPath();
+		ctx.moveTo(167,0);
+		ctx.lineTo(167,500);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(333,0);
+		ctx.lineTo(333,500);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(0,167);
+		ctx.lineTo(500,167);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(0,333);
+		ctx.lineTo(500,333);
+		ctx.stroke();
+		
+		$(document).click(function() {
+			var winner = wincheck;
+			if (!winner==null) {
+				alert(winner);
+			}
+			tiecheck();
+			
+			if(player1) {
+				var x = event.clientX;
+				var y = event.clientY; 
+				
+				if(x>gridPos[0][0][0] && x<gridPos[0][1][0] && y>gridPos[0][0][1] && y<gridPos[1][0][1]) {
+					if (grid[0][0]==0){
+						grid[0][0] = 1;
+						drawX(gridPos[0][0][0],gridPos[0][0][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				if(x>gridPos[1][0][0] && x<gridPos[1][1][0] && y>gridPos[1][0][1] && y<gridPos[2][0][1]) {
+					if(grid[1][0]==0) {
+						grid[1][0] = 1;
+						drawX(gridPos[1][0][0],gridPos[1][0][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				if(x>gridPos[2][0][0] && x<gridPos[2][1][0] && y>gridPos[2][0][1] && y<gridPos[2][0][1]+167 && grid[2][0]==0) {
+					if(grid[2][0]==0) {
+						grid[2][0] = 1;
+						drawX(gridPos[2][0][0],gridPos[2][0][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				
+				if(x>gridPos[0][1][0] && x<gridPos[0][2][0] && y>gridPos[0][1][1] && y<gridPos[1][1][1] && grid[0][1]==0) {
+					if(grid[0][1]==0) {
+						grid[0][1] = 1;
+						drawX(gridPos[0][1][0],gridPos[0][1][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				if(x>gridPos[1][1][0] && x<gridPos[1][2][0] && y>gridPos[1][1][1] && y<gridPos[2][1][1] && grid[1][1]==0) {
+					if(grid[1][1]==0) {
+						grid[1][1] = 1;
+						drawX(gridPos[1][1][0],gridPos[1][1][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				if(x>gridPos[2][1][0] && x<gridPos[2][2][0] && y>gridPos[2][1][1] && y<gridPos[2][1][1]+167 && grid[2][1]==0) {
+					if(grid[2][1]==0) {
+						grid[2][1] = 1;
+						drawX(gridPos[2][1][0],gridPos[2][1][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				
+				if(x>gridPos[0][2][0] && x<gridPos[0][2][0]+167 && y>gridPos[0][2][1] && y<gridPos[1][2][1] && grid[0][2]==0) {
+					if(grid[0][2]==0) {
+						grid[0][2] = 1;
+						drawX(gridPos[0][2][0],gridPos[0][2][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				if(x>gridPos[1][2][0] && x<gridPos[1][2][0]+167 && y>gridPos[1][2][1] && y<gridPos[2][2][1] && grid[1][2]==0) {
+					if(grid[1][2]==0) {
+						grid[1][2] = 1;
+						drawX(gridPos[1][2][0],gridPos[1][2][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}
+				if(x>gridPos[2][2][0] && x<gridPos[2][2][0]+167 && y>gridPos[2][2][1] && y<gridPos[2][2][1]+167 && grid[2][2]==0) {
+					if(grid[2][2]==0) {
+						grid[2][2] = 1;
+						drawX(gridPos[2][2][0],gridPos[2][2][1]);
+						player1 = false;
+					}
+					else {
+						alert("this spot is taken");
+						player1 = true;
+					}
+				}				
+			}
+			else {
+				if(ai) {
+				
+				}
+				else {
+					
+				}
+				player1=true;
+			}
+		});
+		
+		function drawX(x,y) {
+			ctx.beginPath();
+			ctx.moveTo(x,y);
+			ctx.lineTo(x+167,y+167);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(x+167,y);
+			ctx.lineTo(x,y+167);
+			ctx.stroke();
+		}
+		function drawO(x,y) {
+			ctx.beginPath();
+			ctx.arc(x+84,y+84,84,0,2*Math.PI);
+		}
+		
+		function wincheck() {
+			for(i=0; i<3; i++) {
+				if(grid[0][i] == grid[1][i] && grid[0][i] == grid[2][i] && !grid[0][i]==0) {
+					return grid[0][i];
+				}
+				if(grid[i][0] == grid[i][1] && grid[i][0] == grid[i][2] && !grid[i][0]==0) {
+					return grid[i][0];
+				}
+			}
+			if(grid[0][0] == grid[1][1] && grid[0][0] == grid[2][2] && !grid[0][0]==0) {
+				return grid[0][0];
+				alert("HELLO!");
+			}
+			if(grid[0][2] == grid[1][1] && grid[0][0] == grid[2][0] && !grid[0][2]==0) {
+				return grid[0][2];
+			}
+			return null;
+		};
+		
+		function tiecheck() {
+			tempTie=true;
+			for(i=0; i<3; i++) {
+				for(z=0; z<3; z++) {
+					if(grid[i][z]==0) {
+						tempTie=false;
+					}
+				}
+			}
+			tie=tempTie;
+		};
+		
+	</script>
+</head>
+<body>
+	<div id="Title">
+		<H2>Tic Tac Toe Game</H2>
+	</div>
+	
+	<div id="Info"> 
+		<div id="Players">
+			
+		</div>
+		<div id="Scores">
+			<div class="PlayerScores">
+				
+			</div>
+		</div>
+	</div>
+	
+	<div id="GameGrid">
+		
+	</div>
+
+</body>
+</html>
